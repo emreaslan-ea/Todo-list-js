@@ -1,0 +1,122 @@
+:root{
+    --primary-color: #DF30D9;
+    --secondary-color: #00D6BD;
+    --background-color: linear-gradient(90deg, #00d6bd, #df30d9);
+    --text-mute: rgb(121, 121, 121);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-family: 'Montserrat', sans-serif;
+}
+body{
+    background: var(--background-color);
+}
+li{
+    list-style-type: none;
+    background-color: rgb(146, 50, 230);
+    border: 1px solid #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: -6px 0px 29px 7px #00000023;
+    display: block;
+    width: 100%;
+    margin-bottom: 1em;
+}
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+/*  ADD TO DO */
+.add-to-do{
+    margin: 0 auto;
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    width: 300px;
+    background: linear-gradient(90deg, #df30d9, #00d6bd);;
+    border-radius: 20px;
+    box-shadow: -6px 0px 29px 7px #00000023;
+}
+.add-to-do form label{
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1.5rem;
+    color: #fff;
+}
+.add-to-do form{
+    width: 75%;
+}
+.todo-input{
+    width: 100%;
+    padding: 8px 5px;
+    border-radius: 5px;
+}
+.add-to-do form .add-btn{
+    padding: 5px 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 0.4em;
+    cursor: pointer;
+}
+
+/* SEARCH TO DO AND TO DO ITEMS */
+
+.my-todos{
+    color: #fff;
+    width: 700px;
+    min-height: fit-content;
+    margin: 2em auto;
+    background: linear-gradient(90deg, #df30d9, #00d6bd);
+    border-radius: 20px;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: -6px 0px 29px 7px #00000023;
+}
+.my-todos .search{
+    width: 60%;
+}
+.my-todos .search form{
+    display: block;
+}
+.my-todos .search form label{
+    display: block;
+    margin-bottom: 0.2em;
+    font-size: 1.1rem;
+    color: #fff;
+}
+.my-todos .search form input{
+    width: 100%;
+}
+.my-todos h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 8px;
+    margin-top: 1em;
+}
+.my-todos .my-todo-list{
+    margin-top: 1em;
+    width: 100%;
+}
+.my-todos .my-todo-list ul li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+}
+.my-todos .my-todo-list ul li i{
+    font-size: 1.3em;
+    padding-left: 0.3em;
+}
+
