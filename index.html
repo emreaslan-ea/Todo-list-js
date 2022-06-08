@@ -13,16 +13,29 @@
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/brands.min.css" integrity="sha512-OivR4OdSsE1onDm/i3J3Hpsm5GmOVvr9r49K3jJ0dnsxVzZgaOJ5MfxEAxCyGrzWozL9uJGKz6un3A7L+redIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <title>To Do List</title>
 </head>
 <body>
     <div class="add-to-do">
-        <form>
-            <label for="add-todo">Add new to do</label>
-            <input class="todo-input" type="text" id="fname" name="todo" placeholder="exc. buy eth">
-            <button type="submit" class="add-btn">Add</button>   
-        </form>
+        <div>
+            <form id="add-newtodo">
+                <label for="add-todo">Add new to do</label>
+                <input class="todo-input" type="text" id="fname" name="todo" placeholder="exc. buy eth">
+                <button type="submit" class="add-btn">Add</button>   
+            </form>
+        </div>
+        <div id="alerts">
+            <div id="success" class="alert">
+                <p>New to do added successfully</p>
+                <div class="alert-closebtn">
+                    <a href="#"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            </div>
+            <div id="danger" class="danger alert">
+                <p>Please add new to do</p>
+                <a href="#"><i class="fa-solid fa-xmark"></i></a>
+            </div>
+        </div>
     </div>
 
     <div class="my-todos">
@@ -63,6 +76,6 @@
 
 
 
- 
+<script src="/main.js"></script>
 </body>
 </html>
