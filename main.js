@@ -6,11 +6,13 @@ const successalert = document.querySelector('#success');
 const dangeralert = document.querySelector('#danger');
 
 
+
 eventListeners();
 
 function eventListeners(){
     addtodoForm.addEventListener('submit', addTodo);
     document.addEventListener('DOMContentLoaded',LoadAllTodosToUI);
+    listTodo.addEventListener('click',deleteTodoFromUI);
 }
 
 function LoadAllTodosToUI(){
@@ -19,18 +21,15 @@ function LoadAllTodosToUI(){
         addTodoToUI(todo);
     });
 }
-
+function warningend(){
+    alerts.style.display = 'none';
+    dangeralert.style.display = 'none';
+    successalert.style.display = 'none';
+}
 // new to do add
 function addTodo(e){
-    const newtodo = addtodoinput.value;
+    const newtodo = addtodoinput.value.trim();
     
-    function warningend(){
-        alerts.style.display = 'none';
-        dangeralert.style.display = 'none';
-        successalert.style.display = 'none';
-    }
-
-
     if(addtodoinput.value === ""){
         alerts.style.display = "block";
         dangeralert.style.display = 'flex';
@@ -80,4 +79,30 @@ function addTodosToStorage(newtodo){
     todos.push(newtodo);
 
     localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function deleteTodosFromStorage(deletedtodo){
+    let todos = getTodosFromStorage();
+
+    todos.forEach((deletes,index) =>{
+        if(deletedtodo == deletes){
+            todos.splice(index,1);
+        }
+    });
+
+    localStorage.setItem('todos',JSON.stringify(todos));
+}
+
+function deleteTodoFromUI(e){
+    if(e.target.className == "fa-solid fa-xmark"){
+        deleteTodosFromStorage(e.target.parentElement.parentElement.parentElement.textContent.trim());
+
+        e.target.parentElement.parentElement.parentElement.remove();
+
+        successalert.childNodes[1].innerText = "To do removed successfully";
+        alerts.style.display = "block";
+        successalert.style.display = 'flex';
+        setTimeout(warningend,2000);
+        
+    }
 }
