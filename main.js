@@ -18,33 +18,55 @@ function eventListeners(){
     listTodo.addEventListener('click',completedTodoUI);
     filter.addEventListener('keyup',filterTodo);
     clearAll.addEventListener('click',clearAllTodos);
-    // selectTodo.addEventListener('change',selectListTodo);
+    selectTodo.addEventListener('change',selectListTodo);
 }
 
-
-function LoadAllTodosToUI(){
+// all todos list to UI when load page
+function LoadAllTodosToUI(e){
     let todos = getTodosFromStorage();
     todos.forEach(todo => {
         addTodoToUI(todo);
     });
 
+    // complete todos list to UI when load page
+    let completetodos = getCompleteTodosFromStorage();
+
+    let duplicates = todos.filter(function(val) {
+    return completetodos.indexOf(val) != -1;
+    });
+    const alltodos = document.querySelectorAll('.my-todo-list ul li');
+
+    for(let i=0; i<alltodos.length; i++){
+        if(duplicates.includes(alltodos[i].childNodes[0].innerText)){
+            alltodos[i].classList.add('completed');
+        }
+    }
 }
-// function selectListTodo(){
-//     const todoitem = document.querySelectorAll('.my-todos .my-todo-list ul li');
-//     if(selectTodo.value === 'completed'){
 
-//     let completetodos = getCompleteTodosFromStorage();
+function selectListTodo(){
+    const alltodos = document.querySelectorAll('.my-todos .my-todo-list ul li');
+    const completeitem = document.querySelectorAll('.my-todos .my-todo-list ul li.completed');
+    
+    if(selectTodo.value === 'completed'){
+        alltodos.forEach(todo => todo.style.display = 'none');
+        completeitem.forEach(todo =>todo.style.display = 'flex');
+    }
+    else if(selectTodo.value === 'uncompleted'){
+        alltodos.forEach(todo => todo.style.display = 'flex');
+        completeitem.forEach(todo =>todo.style.display = 'none');
+    }
+    else{alltodos.forEach(todo => todo.style.display = 'flex');}
 
-//     completetodos.forEach( completeditem => {
-//     })
-// }
+}
 
-// }
+// notification end function
 function warningend(){
     alerts.style.display = 'none';
     dangeralert.style.display = 'none';
     successalert.style.display = 'none';
 }
+
+
 // new to do add
 function addTodo(e){
     const newtodo = addtodoinput.value.trim();
@@ -65,8 +87,8 @@ function addTodo(e){
     e.preventDefault();
 }
 
+// creating new li element for new todo
 function addTodoToUI(newtodo){
-
 
     const listitem = document.createElement('li');
 
@@ -83,6 +105,7 @@ function addTodoToUI(newtodo){
     listTodo.appendChild(listitem);
 }
 
+// array list all todos
 function getTodosFromStorage(){
     let todos;
 
@@ -94,6 +117,8 @@ function getTodosFromStorage(){
 
     return todos;
 }
+
+// array list complete todos
 function getCompleteTodosFromStorage(){
     let completetodos;
 
@@ -105,6 +130,8 @@ function getCompleteTodosFromStorage(){
 
     return completetodos;
 }
+
+// array list uncomplete todos
 function getUncompleteTodosFromStorage(){
     let uncompletetodos;
 
@@ -143,6 +170,7 @@ function completedTodoUI(e){
         if(e.target.parentElement.parentElement.parentElement.classList.contains('completed') == false){
             e.target.parentElement.parentElement.parentElement.classList.add('completed');
 
+            // add complete todo list to storage
             let completetodos = getCompleteTodosFromStorage();
             completetodos.push(e.target.parentElement.parentElement.parentElement.textContent.trim());
             localStorage.setItem('completetodos', JSON.stringify(completetodos));
@@ -150,14 +178,13 @@ function completedTodoUI(e){
         else{
             e.target.parentElement.parentElement.parentElement.classList.remove('completed');
 
+            //delete complete todo list from storage
             let completetodos = getCompleteTodosFromStorage();
-
             completetodos.forEach((deletes,index) =>{
                 if(e.target.parentElement.parentElement.parentElement.textContent.trim() == deletes){
                     completetodos.splice(index,1);
                 }
             });
-        
             localStorage.setItem('completetodos',JSON.stringify(completetodos));
         }
         
@@ -169,17 +196,26 @@ function completedTodoUI(e){
 function deleteTodoFromUI(e){
     if(e.target.className == "fa-solid fa-xmark"){
         deleteTodosFromStorage(e.target.parentElement.parentElement.parentElement.textContent.trim());
-
         e.target.parentElement.parentElement.parentElement.remove();
-
+        
+        // notification
         successalert.childNodes[1].innerText = "To do removed successfully";
         alerts.style.display = "block";
         successalert.style.display = 'flex';
         setTimeout(warningend,2000);
         
+        // delete from complete array storage
+        let completetodos = getCompleteTodosFromStorage();
+        completetodos.forEach((deletes,index) =>{
+            if(e.target.parentElement.parentElement.parentElement.textContent.trim() == deletes){
+                completetodos.splice(index,1);
+            }
+        });
+        localStorage.setItem('completetodos',JSON.stringify(completetodos));
     }
 }
 
+// search todo
 function filterTodo(e){
     const searchitem = e.target.value.toLowerCase();
 
@@ -197,7 +233,7 @@ function filterTodo(e){
     })
 }
 
-function clearAllTodos(){
+function clearAllTodos(e){
     const confirmmessage = 'Are you sure you want to delete all to do list ?';
     const alltodoElements = document.querySelectorAll('.my-todos .my-todo-list ul li');
     if(confirm(confirmmessage) == true){
@@ -216,5 +252,10 @@ function clearAllTodos(){
         alerts.style.display = "block";
         successalert.style.display = 'flex';
         setTimeout(warningend,4000);
+
+        // delete complete array from storage
+        let completetodos = getCompleteTodosFromStorage();
+        completetodos = [];
+        localStorage.setItem('completetodos',JSON.stringify(completetodos));
     }
 }
