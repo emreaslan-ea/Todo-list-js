@@ -221,7 +221,7 @@ function filterTodo(e){
 
     const todoitem = document.querySelectorAll('.my-todos .my-todo-list ul li');
 
-    todoitem.forEach((todolielement) =>{
+    todoitem.forEach(todolielement =>{
         const text = todolielement.innerText.toLowerCase();
 
         if(text.indexOf(searchitem) === -1){
